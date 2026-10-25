@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro-refactor @ github.com/mozaroc #############################
+#################### x-ui-pro-refactor @ github.com/mozaroc - modified by myxdroz ##########################
 [[ $EUID -ne 0 ]] && { echo "Run as root: sudo bash $0"; exit 1; }
 
 # ─── Output helpers ──────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ check_cpu
 
 # ─── Constants ───────────────────────────────────────────────────────────────
 XUIDB="/etc/x-ui/x-ui.db"
-GITHUB_RAW="https://raw.githubusercontent.com/mozaroc/3x-ui-pro/main"
+GITHUB_RAW="${GITHUB_RAW:-https://raw.githubusercontent.com/myxdroz/3x-ui-pro/main}"
 FAKE_SITE_COUNT=50
 
 # ─── Default argument values ─────────────────────────────────────────────────
@@ -123,6 +123,9 @@ config_password=$(gen_random_string 10)
 diag_path="/net-$(gen_random_string 12)/"
 diag_token=$(gen_random_string 16)
 mtr_backend_port=$(make_port)
+
+# Pinned 3x-ui release (override with: -version X.Y.Z)
+PANEL_VERSION="3.10.2"
 
 # ─── Argument parsing ────────────────────────────────────────────────────────
 while [ "$#" -gt 0 ]; do
@@ -749,7 +752,7 @@ install_panel() {
         "https://github.com/MHSanaei/3x-ui/releases/download/${tag_version}/x-ui-linux-$(_arch).tar.gz"
     [[ $? -ne 0 ]] && echo "Download failed." && exit 1
 
-    wget -O /usr/bin/x-ui-temp https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh
+    wget -O /usr/bin/x-ui-temp "https://raw.githubusercontent.com/MHSanaei/3x-ui/${tag_version}/x-ui.sh"
     [[ $? -ne 0 ]] && echo "Failed to download x-ui.sh" && exit 1
 
     [[ -d /usr/local/x-ui/ ]] && systemctl stop x-ui 2>/dev/null; rm -rf /usr/local/x-ui/
