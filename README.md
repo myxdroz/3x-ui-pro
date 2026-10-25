@@ -1,6 +1,6 @@
 # 3x-ui-pro
 
-Secure 3x-ui installer for Terramaster F4-425 NAS and other self-hosted setups.
+Secure 3x-ui installer other self-hosted setups.
 
 ## Quick Start
 
